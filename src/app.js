@@ -9,7 +9,7 @@ $(document).ready(function () {
   var router = new Router();
   Backbone.history.start();
 }).on('click a', function (e) {
-  if (e.target.href.indexOf(root) === 0) {
+  if (e.target.href && e.target.href.indexOf(root) === 0) {
     e.preventDefault();
     Backbone.history.navigate(e.target.getAttribute('href'), { trigger: true });
   }
