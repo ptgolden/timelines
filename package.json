@@ -1,8 +1,8 @@
 {
-  "name": "timeline-thing",
+  "name": "timelines",
   "version": "0.0.1",
   "author": "Patrick Golden",
-  "description": "A Backbone application for creating timelines.",
+  "description": "A Backbone application for creating and comparing timelines.",
   "private": true,
   "dependencies": {
     "underscore": "^1.6.0",
