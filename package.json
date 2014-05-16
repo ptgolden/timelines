@@ -30,7 +30,7 @@
   },
   "browserify-shim": {
     "jquery-bootstrap": {
-      "depends": "jquery"
+      "depends": [ "jquery:jQuery" ]
     }
   }
 }
