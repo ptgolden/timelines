@@ -1,5 +1,5 @@
 NPMBIN=./node_modules/.bin
-BROWSERIFY_OPTS=-o dist/timelines.js src/app.js
+BROWSERIFY_OPTS=-d -o dist/timelines.js src/app.js
 
 all: setup bundle
 
