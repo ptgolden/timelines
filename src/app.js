@@ -39,8 +39,10 @@ Router = Backbone.Router.extend({
     this.changeView(IndexView);
   },
   allProjects: function () {
-    var AllProjectsView = require('./views/all_projects');
-    this.changeView(AllProjectsView);
+    var AllProjectsView = require('./views/all_projects')
+      , ProjectCollection = require('./collections/project')
+
+    this.changeView(AllProjectsView, { collection: new ProjectCollection() });
   },
   project: function (project) {
     var ProjectView = require('./views/project');

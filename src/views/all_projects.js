@@ -1,13 +1,36 @@
 "use strict";
 
 var Backbone = require('../backbone')
+  , Project = require('../models/project')
 
 module.exports = Backbone.View.extend({
+  events: {
+    'click #add-project': 'addProject'
+  },
   initialize: function () {
-    this.render();
+    var that = this;
+    this.collection.fetch({
+      success: that.render.bind(that)
+    });
   },
   render: function () {
-    var template = require('../templates/all_projects.html');
-    this.$el.html(template());
+    var that = this
+      , template = require('../templates/all_projects.html')
+
+    this.$el.html(template({ collection: that.collection }));
+  },
+  addProject: function () {
+    var that = this
+      , AddProjectView = require('./edit_project')
+      , view = new AddProjectView({ model: new Project() })
+      , $editing = this.$('#editing')
+    
+
+    view.$el.appendTo($editing);
+    this.listenToOnce(view.model, 'sync', function(model) {
+      this.collection.add(model);
+      this.render();
+      view.remove();
+    });
   }
 });

@@ -4,7 +4,7 @@ var migrations = [];
 
 migrations.push({
   version: 1,
-  migration: function (transaction, next) {
+  migrate: function (transaction, next) {
     var itemStore
       , projectStore
       , collectionStore

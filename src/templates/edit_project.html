@@ -1,0 +1,16 @@
+<h1><% print(project.isNew() ? 'Add' : 'Edit'); %> Project</h1>
+<div class="form">
+  <div class="form-group">
+    <label for="project-name">Project name</label>
+    <input id="project-name" class="form-control" type="text" />
+  </div>
+
+  <div class="form-group">
+    <label for="project-description">Project description</label>
+    <textarea id="project-description" class="form-control"></textarea>
+  </div>
+</div>
+<div>
+  <button class="btn btn-primary" name="save">Save</button>
+  <button class="btn btn-danger pull-right" name="cancel">Cancel</button>
+</div>

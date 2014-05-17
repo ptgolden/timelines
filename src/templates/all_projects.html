@@ -1,1 +1,11 @@
-<h1>All projects</h1>
+<div class="col-md-6">
+  <h1>All projects</h1>
+  <ul>
+    <% collection.each(function (project) { %>
+    <li><a href="/projects/<%= project.get('id') %>"><%= project.get('name') %></a></li>
+    <% }); %>
+  </ul>
+  <button class="btn btn-primary" id="add-project">Add project</button>
+</div>
+<div id="editing" class="col-md-6">
+</div>
