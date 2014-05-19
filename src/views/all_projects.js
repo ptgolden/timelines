@@ -20,14 +20,12 @@ module.exports = Backbone.View.extend({
     this.$el.html(template({ collection: that.collection }));
   },
   addProject: function () {
-    var that = this
+    var $editing = this.$('#editing')
       , AddProjectView = require('./edit_project')
       , view = new AddProjectView({ model: new Project() })
-      , $editing = this.$('#editing')
-    
 
     view.$el.appendTo($editing);
-    this.listenToOnce(view.model, 'sync', function(model) {
+    this.listenToOnce(view.model, 'sync', function (model) {
       this.collection.add(model);
       this.render();
       view.remove();

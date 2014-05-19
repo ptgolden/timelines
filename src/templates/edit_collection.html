@@ -1,0 +1,16 @@
+<h1><% print(model.isNew() ? 'Add' : 'Edit'); %> item collection</h1>
+<div class="form">
+  <div class="form-group">
+    <label for="collection-name">Collection name</label>
+    <input id="collection-name" class="form-control" type="text" />
+  </div>
+
+  <div class="form-group">
+    <label for="collection-description">Collection description</label>
+    <textarea id="collection-description" class="form-control"></textarea>
+  </div>
+</div>
+<div>
+  <button class="btn btn-primary" name="save">Save</button>
+  <button class="btn btn-danger pull-right" name="cancel">Cancel</button>
+</div>

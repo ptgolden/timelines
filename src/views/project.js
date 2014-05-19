@@ -22,10 +22,17 @@ module.exports = Backbone.View.extend({
   },
   render: function () {
     var that = this
+      , ItemCollectionsView = require('./all_collections')
       , template = require('../templates/project.html')
 
     this.$mainEl = $('<div class="project">').html(template({ project: this.model })).appendTo(that.$el);
     this.$editEl = $('<div>').appendTo(that.$el);
+
+    this.collectionsView = new ItemCollectionsView({
+      el: '#project-collections',
+      collection: this.model.itemCollections
+    });
+
     this.stickit();
   },
   editProject: function () {

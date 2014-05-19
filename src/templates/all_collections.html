@@ -1,0 +1,12 @@
+<div id="project-collections" class="row">
+  <div class="col-md-6">
+    <h2>Collections</h2>
+    <ul>
+      <% itemCollections.each(function (collection) { %>
+      <li><a href="/collections/<%= collection.get('id') %>"><%= collection.get('name') %></a></li>
+      <% }); %>
+    </ul>
+    <button class="btn btn-primary" id="add-collection">Add collection</button>
+  </div>
+  <div id="editing" class="col-md-6"></div>
+</div>
