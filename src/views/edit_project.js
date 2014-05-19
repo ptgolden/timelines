@@ -8,8 +8,8 @@ module.exports = Backbone.View.extend({
     '#project-description': 'description'
   },
   events: {
-    'click button[name="save"]': 'save',
-    'click button[name="cancel"]': 'remove'
+    'click button[name="save"]': 'saveModel',
+    'click button[name="cancel"]': function () { this.die(false) }
   },
   initialize: function () {
     this.render();
@@ -21,8 +21,12 @@ module.exports = Backbone.View.extend({
     this.$el.html(template({ project: that.model }));
     this.stickit();
   },
-  save: function () {
-    this.model.save();
+  saveModel: function () {
+    var that = this;
+    this.model.save().then(that.die.bind(this, true));
+  },
+  die: function (modelSaved) {
+    this.trigger('removed', !!modelSaved);
     this.remove();
   }
 });

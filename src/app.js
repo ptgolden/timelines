@@ -32,6 +32,7 @@ Router = Backbone.Router.extend({
     if (this._view) this._view.remove();
     this._view = new View(options || {});
     this._view.$el.appendTo('#main');
+    return this._view;
   },
 
   index: function () {
@@ -44,9 +45,12 @@ Router = Backbone.Router.extend({
 
     this.changeView(AllProjectsView, { collection: new ProjectCollection() });
   },
-  project: function (project) {
-    var ProjectView = require('./views/project');
-    this.changeView(ProjectView);
+  project: function (projectID) {
+    var ProjectView = require('./views/project')
+      , Project = require('./models/project')
+      , view
+
+    this.changeView(ProjectView, { model: new Project({ id: projectID }) });
   },
   allCollections: function() {
     var AllCollectionsView = require('./views/all_collections');
