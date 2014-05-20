@@ -56,9 +56,11 @@ Router = Backbone.Router.extend({
     var AllCollectionsView = require('./views/all_collections');
     this.changeView(AllCollectionsView);
   },
-  collection: function(collection) {
-    var CollectionView = require('./views/collection');
-    this.changeView(CollectionView);
+  collection: function(collectionID) {
+    var CollectionView = require('./views/collection')
+      , Collection = require('./models/collection')
+
+    this.changeView(CollectionView, { model: new Collection({ id: collectionID }) });
   },
   allItems: function () {
     var AllItemsView = require('./views/all_items');
