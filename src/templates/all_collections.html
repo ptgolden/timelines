@@ -3,7 +3,7 @@
     <h2>Collections</h2>
     <ul>
       <% itemCollections.each(function (collection) { %>
-      <li><a href="/collections/<%= collection.get('id') %>"><%= collection.get('name') %></a></li>
+      <li><a href="#<%= itemCollections.project.get('id') + '/collection-' + collection.get('id') %>"><%= collection.get('name') %></a></li>
       <% }); %>
     </ul>
     <button class="btn btn-primary" id="add-collection">Add collection</button>

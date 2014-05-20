@@ -15,16 +15,12 @@ $(document).ready(function () {
   }
 });
 
-
 Router = Backbone.Router.extend({
   routes: {
     '': 'index',
-    'projects': 'allProjects',
-    'projects/:project': 'project',
-    'collections': 'allCollections',
-    'collections/:collection': 'collection',
-    'items': 'allItems',
-    'items/:item': 'item'
+    ':project': 'project',
+    ':project/item-:item': 'item',
+    ':project/collection-:collection': 'collection'
   },
 
   _view: null,
@@ -32,42 +28,53 @@ Router = Backbone.Router.extend({
     if (this._view) this._view.remove();
     this._view = new View(options || {});
     this._view.$el.appendTo('#main');
-    return this._view;
   },
 
-  index: function () {
-    var IndexView = require('./views/index');
-    this.changeView(IndexView);
+  _currentProject: null,
+  _projectEl: $('#current-project'),
+  setProject: function (projectID) {
+    var that = this, Project, project;
+    if (this._currentProject && this._currentProject.get('id') === projectID) {
+      project = this._currentProject;
+    } else if (projectID) {
+
+      Project = require('./models/project');
+      project = this._currentProject = new Project({ id: projectID });
+      this._currentProject.fetch().then(function () {
+        $('#current-project')
+          .text(that._currentProject.get('name'))
+          .attr('href', '#' + that._currentProject.get('id'));
+      });
+    } else {
+      project = this._currentProject = null;
+      $('#current-project').text('').attr('href', '');
+    }
+    return project;
   },
-  allProjects: function () {
+  index: function () {
     var AllProjectsView = require('./views/all_projects')
       , ProjectCollection = require('./collections/project')
 
+    this.setProject();
     this.changeView(AllProjectsView, { collection: new ProjectCollection() });
   },
   project: function (projectID) {
     var ProjectView = require('./views/project')
-      , Project = require('./models/project')
-      , view
+      , project = this.setProject(projectID)
 
-    this.changeView(ProjectView, { model: new Project({ id: projectID }) });
+    this.changeView(ProjectView, { model: project });
   },
-  allCollections: function() {
-    var AllCollectionsView = require('./views/all_collections');
-    this.changeView(AllCollectionsView);
-  },
-  collection: function(collectionID) {
+  collection: function (projectID, collectionID) {
     var CollectionView = require('./views/collection')
       , Collection = require('./models/collection')
+      , project = this.setProject(projectID)
 
     this.changeView(CollectionView, { model: new Collection({ id: collectionID }) });
   },
-  allItems: function () {
-    var AllItemsView = require('./views/all_items');
-    this.changeView(AllItemsView);
-  },
-  item: function (item) {
-    var ItemView = require('./views/item');
+  item: function (projectID, itemID) {
+    var ItemView = require('./views/item')
+      , project = this.setProject(projectID)
+
     this.changeView(ItemView);
   }
 });

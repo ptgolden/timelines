@@ -2,7 +2,7 @@
   <h1>All projects</h1>
   <ul>
     <% collection.each(function (project) { %>
-    <li><a href="/projects/<%= project.get('id') %>"><%= project.get('name') %></a></li>
+    <li><a href="#<%= project.get('id') %>"><%= project.get('name') %></a></li>
     <% }); %>
   </ul>
   <button class="btn btn-primary" id="add-project">Add project</button>
