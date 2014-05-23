@@ -9,7 +9,10 @@
     "backbone-indexeddb": "superfeedr/indexeddb-backbonejs-adapter",
     "backbone.stickit": "^0.8.0",
     "d3": "^3.4.8",
+    "filesaver.js": "^2013.1.23",
     "jquery": "^1.11.0",
+    "jszip": "^2.2.2",
+    "uid": "0.0.2",
     "underscore": "^1.6.0"
   },
   "devDependencies": {

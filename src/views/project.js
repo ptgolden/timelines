@@ -12,7 +12,8 @@ module.exports = Backbone.View.extend({
   },
   events: {
     'click button[name="edit"]': 'editProject',
-    'click button[name="delete"]': 'deleteProject'
+    'click button[name="delete"]': 'deleteProject',
+    'click button[name="export"]': 'exportProject'
   },
   initialize: function () {
     this.model.fetch({
@@ -68,6 +69,14 @@ module.exports = Backbone.View.extend({
         }
       });
     });
+  },
+  exportProject: function () {
+    var zipFromProject = require('../utils/zip_from_project')
+      , saveAs = require('filesaver.js')
 
+    zipFromProject(this.model).then(function (zip) {
+      var zipFile = zip.generate({ type: 'blob' });
+      saveAs(zipFile, 'project.zip');
+    });
   }
 });
