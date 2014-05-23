@@ -76,6 +76,9 @@ Router = Backbone.Router.extend({
       , Item = require('./models/item')
       , project = this.setProject(projectID)
 
-    this.changeView(ItemView, { model: new Item({ id: itemID }) });
+    this.changeView(ItemView, {
+      model: new Item({ id: itemID }),
+      project: project
+    });
   }
 });

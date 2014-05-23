@@ -12,8 +12,7 @@ module.exports = Backbone.View.extend({
   },
   events: {
     'click button[name="edit"]': 'editProject',
-    'click button[name="delete"]': 'deleteProject',
-    'click button[name="save"]': 'saveProject',
+    'click button[name="delete"]': 'deleteProject'
   },
   initialize: function () {
     this.model.fetch({
