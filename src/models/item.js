@@ -3,6 +3,16 @@
 var Backbone = require('../backbone')
   , database = require('../database')
 
+/*
+ * Item consists of:
+ *   - collectionID
+ *   - title
+ *   - dateStartInt
+ *   - dateEndInt
+ *   - itemType
+ *   - (key, val) metadata pairs
+ */
+
 module.exports = Backbone.Model.extend({
   database: database,
   storeName: 'items'

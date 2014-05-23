@@ -7,5 +7,9 @@ var Backbone = require('../backbone')
 module.exports = Backbone.Collection.extend({
   database: database,
   storeName: 'items',
-  model: Item
+  model: Item,
+  initialize: function (models, options) {
+    this.itemCollection = options.itemCollection;
+    this.project = options.project;
+  }
 });

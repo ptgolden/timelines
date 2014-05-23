@@ -1,0 +1,11 @@
+<h1><% print(model.isNew() ? 'Add' : 'Edit'); %> item</h1>
+<div class="form">
+  <div class="form-group">
+    <label for="item-title">Item title</label>
+    <input id="item-title" class="form-control" type="text" />
+  </div>
+</div>
+<div>
+  <button class="btn btn-primary" name="save">Save</button>
+  <button class="btn btn-danger pull-right" name="cancel">Cancel</button>
+</div>
