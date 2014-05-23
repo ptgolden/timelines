@@ -5,7 +5,9 @@ var Backbone = require('../backbone')
 
 module.exports = Backbone.View.extend({
   bindings: {
-    ".item #item-title": 'title'
+    '.item #item-title': 'title',
+    '.item #item-start': 'dateStartInt',
+    '.item #item-end': 'dateEndInt'
   },
   getEditEvents: function () {
     var editInline = require('./generic/edit_inline')

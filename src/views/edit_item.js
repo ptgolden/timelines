@@ -1,5 +1,7 @@
-var EditItemView = require('./generic/edit_item')
+var dehumanizeDate = require('dehumanize-date')
+  , EditItemView = require('./generic/edit_item')
   , template = require('../templates/edit_item.html')
+  , parseDate = require('../utils/parse_date')
 
 module.exports = EditItemView.extend({
   constructor: function () {
@@ -7,6 +9,20 @@ module.exports = EditItemView.extend({
     EditItemView.apply(this, arguments);
   },
   bindings: {
-    '#item-title': 'title'
+    '#item-title': 'title',
+    '#item-start-date': {
+      observe: 'dateStartInt',
+      getVal: function ($el, evt, options) {
+        var parsed = parseDate($el.val());
+        return parsed && parsed.str;
+      }
+    },
+    '#item-end-date': {
+      observe: 'dateEndInt',
+      getVal: function ($el, evt, options) {
+        var parsed = parseDate($el.val());
+        return parsed && parsed.str;
+      }
+    }
   }
 });

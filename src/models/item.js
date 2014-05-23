@@ -15,5 +15,8 @@ var Backbone = require('../backbone')
 
 module.exports = Backbone.Model.extend({
   database: database,
-  storeName: 'items'
+  storeName: 'items',
+  validate: function (attrs, options) {
+    if (!attrs.title) return "must have a title."
+  }
 });
