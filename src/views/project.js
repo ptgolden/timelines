@@ -13,7 +13,9 @@ module.exports = Backbone.View.extend({
   events: {
     'click button[name="edit"]': 'editProject',
     'click button[name="delete"]': 'deleteProject',
-    'click button[name="export"]': 'exportProject'
+    'click button[name="export"]': 'exportProject',
+    'click button.add-to-timeline': 'addToTimeline',
+    'click button.remove-from-timeline': 'removeFromTimeline'
   },
   initialize: function () {
     this.model.fetch({
@@ -23,6 +25,7 @@ module.exports = Backbone.View.extend({
   render: function () {
     var that = this
       , ItemCollectionsView = require('./all_collections')
+      , TimelineView = require('./timeline')
       , template = require('../templates/project.html')
 
     this.$mainEl = $('<div class="project">').html(template({ project: this.model })).appendTo(that.$el);
@@ -33,7 +36,25 @@ module.exports = Backbone.View.extend({
       collection: this.model.itemCollections
     });
 
+    this.timelineView = new TimelineView({ el: '#project-timeline' });
+
     this.stickit();
+  },
+  addToTimeline: function (e) {
+    var $el = $(e.target)
+      , collection = this.model.itemCollections.get($el.val())
+
+    $el.toggleClass('btn-primary btn-default add-to-timeline remove-from-timeline');
+    $el.text('Remove from timeline');
+    this.timelineView.addCollection(collection);
+  },
+  removeFromTimeline: function (e) {
+    var $el = $(e.target)
+      , collection = this.model.itemCollections.get($el.val())
+
+    $el.toggleClass('btn-primary btn-default add-to-timeline remove-from-timeline');
+    $el.text('Add to timeline');
+    this.timelineView.removeCollection(collection);
   },
   editProject: function () {
     var that = this

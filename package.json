@@ -35,14 +35,10 @@
   },
   "browserify-shim": {
     "d3-timeline": {
-      "depends": [
-        "d3"
-      ]
+      "depends": [ "d3" ]
     },
     "jquery-bootstrap": {
-      "depends": [
-        "jquery:jQuery"
-      ]
+      "depends": [ "jquery:jQuery" ]
     }
   }
 }

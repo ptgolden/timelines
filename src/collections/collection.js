@@ -9,6 +9,7 @@ module.exports = Backbone.Collection.extend({
   storeName: 'collections',
   model: Collection,
   initialize: function (models, options) {
+    options = options || {};
     this.project = options.project;
   }
 });
