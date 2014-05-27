@@ -1,8 +1,11 @@
 "use strict";
 
-var Backbone = require('../backbone')
+var $ = require('jquery')
+  , Backbone = require('../backbone')
   , d3 = require('d3')
   , ItemCollections = require('../collections/collection')
+
+require('jquery-bootstrap');
 
 // whatever
 global.d3 = d3;
@@ -44,9 +47,15 @@ module.exports = Backbone.View.extend({
       })
       .display('circle')
       .stack()
-      .itemMargin(30)
-
+      .itemMargin(30);
     svg.datum(data).call(chart);
+
+    this.$('circle[id^="timelineItem"]').tooltip({
+      title: function () {
+        return this.__data__.label;
+      },
+      container: 'body'
+    });
   },
   getData: function () {
     return this.collections.map(function (collection) {
