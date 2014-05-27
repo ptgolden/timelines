@@ -25,12 +25,12 @@ function handleCollection(project, collectionFolder) {
   return promise;
 }
 
-module.exports = function (zipFile, projectName) {
+module.exports = function (zipFileArraybuffer, projectName) {
   var promise
     , dfd = $.Deferred()
-    , zip = new JSZip(zipFile)
+    , zip = new JSZip(zipFileArraybuffer)
     , project = new Project({
-      name: 'test' + uid(),
+      name: projectName || ('project' + uid()),
       description: zip.files['description.txt'].asText()
     })
 

@@ -7,6 +7,7 @@ var _ = require('underscore')
 module.exports = Backbone.View.extend({
   events: {
     'click #add-project': 'addProject',
+    'click #import-sample': 'importSample',
     'change input[name="import"]': 'importProject'
   },
   initialize: function () {
@@ -45,5 +46,36 @@ module.exports = Backbone.View.extend({
       });
     }
     reader.readAsArrayBuffer(zipFile);
+  },
+  importSample: function () {
+    var zipToProject = require('../utils/zip_to_project')
+      , importname = 'CO Example Project'
+      , project
+      , exists
+      , xhr
+      
+    exists = this.collection.any(function (project) {
+      return project.get('name') === importname;
+    })
+
+    if (!exists) {
+      xhr = new XMLHttpRequest();
+      xhr.open('GET', 'dist/example_project.zip', true);
+      xhr.responseType = 'arraybuffer';
+      xhr.onload = function (e) {
+        var arraybuffer = this.response
+          , promise = zipToProject(arraybuffer, importname)
+
+        promise.done(function (project) {
+          Backbone.history.navigate(project.get('id'), { trigger: true });
+        });
+      }
+      xhr.send();
+    } else {
+      project = this.collection.chain().filter(function (project) {
+        return project.get('name') === importname
+      }).first().value();
+      Backbone.history.navigate(project.get('id'), { trigger: true });
+    }
   }
 });
