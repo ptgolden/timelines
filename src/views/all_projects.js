@@ -1,11 +1,13 @@
 "use strict";
 
-var Backbone = require('../backbone')
+var _ = require('underscore')
+  , Backbone = require('../backbone')
   , Project = require('../models/project')
 
 module.exports = Backbone.View.extend({
   events: {
-    'click #add-project': 'addProject'
+    'click #add-project': 'addProject',
+    'change input[name="import"]': 'importProject'
   },
   initialize: function () {
     var that = this;
@@ -30,5 +32,18 @@ module.exports = Backbone.View.extend({
       this.render();
       view.remove();
     });
+  },
+  importProject: function (e) {
+    var zipToProject = require('../utils/zip_to_project')
+      , zipFile = _.first(e.target.files)
+      , reader = new FileReader()
+
+    reader.onload = function (e) {
+      var promise = zipToProject(e.target.result);
+      promise.done(function (project) {
+        Backbone.history.navigate(project.get('id'), { trigger: true });
+      });
+    }
+    reader.readAsArrayBuffer(zipFile);
   }
 });
