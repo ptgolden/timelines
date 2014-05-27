@@ -1,6 +1,6 @@
 "use strict";
 
-var $ = require('jquery')
+var _ = require('underscore')
   , Backbone = require('../backbone')
   , d3 = require('d3')
   , ItemCollections = require('../collections/collection')
@@ -22,11 +22,24 @@ module.exports = Backbone.View.extend({
     var chart
       , svg = d3.select('#' + this.$el.attr('id')).append('svg').attr('width', 1000)
       , data = this.getData()
-      , beg = new Date(0)
-      , end = new Date(0)
 
-    beg.setFullYear(1916);
-    end.setFullYear(1918);
+    var times = _.chain(data).pluck('times').flatten().value()
+      , beg = _.chain(times).pluck('starting_time').min().value()
+      , end = _.chain(times).pluck('endingTime').max().value()
+
+    beg = new Date(beg);
+    if (beg.getMonth < 2) {
+      beg.setFullYear(beg.getFullYear() - 1);
+      beg.setMonth(5);
+      beg.setDate(0);
+    } else {
+      beg.setMonth(0);
+      beg.setDate(0);
+    }
+    end = new Date(end);
+    end.setFullYear(end.getFullYear() + 1);
+    end.setMonth(5);
+    end.setDate(0);
 
     chart = d3.timeline()
       .width(1000)
@@ -36,7 +49,7 @@ module.exports = Backbone.View.extend({
       .tickFormat({
         format: d3.time.format('%b %Y'),
         tickTime: d3.time.months,
-        tickInterval: 4,
+        tickInterval: 3,
         tickSize: 4
       })
       .margin({
