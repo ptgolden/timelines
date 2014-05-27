@@ -10,6 +10,7 @@ module.exports = EditItemView.extend({
   },
   bindings: {
     '#item-title': 'title',
+    '#item-description': 'description',
     '#item-start-date': {
       observe: 'dateStartInt',
       getVal: function ($el, evt, options) {

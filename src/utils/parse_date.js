@@ -2,7 +2,7 @@
 
 var DIGITS = /^\d+$/
   , YEAR = /^\d{4}$/
-  , MONTH = /^(0[0-9]|1[1-2])$/
+  , MONTH = /^(0[0-9]|1[0-2])$/
   , DAY = /^([0-2][0-9]|3[0-1])$/
 
 function isDigit(str) { return str.match(DIGITS) }

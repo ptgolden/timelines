@@ -46,7 +46,8 @@ module.exports = Backbone.Collection.extend({
         starting_time: startTime,
         endingTime: endTime,
         label: item.get('title'),
-        id: item.get('id')
+        id: item.get('id'),
+        description: item.get('description')
       }
     })
   }

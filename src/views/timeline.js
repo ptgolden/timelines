@@ -17,6 +17,8 @@ module.exports = Backbone.View.extend({
     this.render();
   },
   render: function () {
+    var that = this;
+
     this.$el.html('');
 
     var chart
@@ -42,7 +44,7 @@ module.exports = Backbone.View.extend({
     end.setDate(0);
 
     chart = d3.timeline()
-      .width(1000)
+      .width(2000)
       .orient('top')
       .beginning(beg.getTime())
       .ending(end.getTime())
@@ -60,15 +62,30 @@ module.exports = Backbone.View.extend({
       })
       .display('circle')
       .stack()
-      .itemMargin(30);
+      .itemMargin(100);
     svg.datum(data).call(chart);
+    svg.attr('width', 1000);
 
     this.$('circle[id^="timelineItem"]').tooltip({
       title: function () {
-        return this.__data__.label;
+        return '<h5>' + this.__data__.label + '</h5>' + '<div>' + this.__data__.description + '</div>';
       },
+      html: true,
       container: 'body'
     });
+
+    d3.selectAll('svg > g > text')
+      .attr('dy', function (d, i) { 
+        return i % 2 ? 3 : -25;
+      })
+      .attr('transform', function (d, i) {
+        var angle = i % 2 ? 10 : -10
+          , aboutx = this.getAttribute('x')
+          , abouty = this.getAttribute('y')
+
+        return 'rotate(' + angle + ',' + aboutx + ',' + abouty + ')';
+      })
+
   },
   getData: function () {
     return this.collections.map(function (collection) {
